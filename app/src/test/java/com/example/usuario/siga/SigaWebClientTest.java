@@ -1,10 +1,7 @@
 package com.example.usuario.siga;
 
-import android.content.Context;
 import android.test.mock.MockContext;
-import android.util.Log;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,16 +15,14 @@ import static org.junit.Assert.*;
  */
 public class SigaWebClientTest {
 
-    private SigaWebClientForTesting sigaWebClient;
+    private UrlJsInjectorWebClientForTesting sigaWebClient;
     private WebView fakeView;
 
     @Before
     public void setUp() throws Exception {
-        Context ctx = new MockContext();
-
         fakeView = new WebView(new MockContext());
 
-        sigaWebClient = new SigaWebClientForTesting(ctx);
+        sigaWebClient = new UrlJsInjectorWebClientForTesting();
     }
 
     @Test
@@ -40,10 +35,10 @@ public class SigaWebClientTest {
         assertArrayEquals(expectedLoadedjs, sigaWebClient.getloadedJs());
     }
 
-    class SigaWebClientForTesting extends SigaWebClient{
+    class UrlJsInjectorWebClientForTesting extends UrlJsInjectorWebClient {
         private ArrayList<String> jsLoaded = new ArrayList<>();
 
-        public SigaWebClientForTesting(Context ctx) { super(ctx); }
+        public UrlJsInjectorWebClientForTesting() { super(null); }
 
         public String[] getloadedJs(){
             return jsLoaded.toArray(new String[jsLoaded.size()]);

@@ -10,7 +10,7 @@ import android.webkit.WebView;
  */
 public class JavaScriptSiga {
 
-    JavaScriptSiga(Context c, WebView w) {
+    JavaScriptSiga() {
     }
 
     @JavascriptInterface

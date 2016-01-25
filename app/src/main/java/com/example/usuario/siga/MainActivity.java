@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setSavePassword(false);
 
-        webView.addJavascriptInterface(new JavaScriptSiga(this, webView), "SIGA");
+        webView.addJavascriptInterface(new JavaScriptSiga(), "SIGA");
 
-        webView.setWebViewClient(new SigaWebClient(this));
+        webView.setWebViewClient(new UrlJsInjectorWebClient(new JavaScriptLoader(this)));
     }
 }

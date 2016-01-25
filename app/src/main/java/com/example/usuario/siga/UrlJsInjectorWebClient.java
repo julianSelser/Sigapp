@@ -14,14 +14,16 @@ import java.util.Map;
 
 /**
  * Created by Julian on 24/01/16.
+ *
+ * Injects JavaScript depending on the URL onPageFinished
  */
-public class SigaWebClient extends WebViewClient{
+public class UrlJsInjectorWebClient extends WebViewClient{
 
     private JavaScriptLoader jsLoader;
     private Map<String, String> jsForUrls;
 
-    public SigaWebClient(Context ctx){
-        jsLoader = new JavaScriptLoader(ctx);
+    public UrlJsInjectorWebClient(JavaScriptLoader _jsLoader){
+        jsLoader = _jsLoader;
 
         jsForUrls = new HashMap();
         jsForUrls.put("www.siga.frba.utn.edu.ar", "dataExtractor.js");
@@ -47,7 +49,7 @@ public class SigaWebClient extends WebViewClient{
     }
 
     protected void injectJsInto(WebView view, String jsFile) throws CantReadJavaScriptException {
-        Log.d("SigaWebClient", "About to inject: " + jsFile);
+        Log.d("UrlJsInjectorWebClient", "About to inject: " + jsFile);
 
         view.loadUrl(jsLoader.load(jsFile));
     }

@@ -14,7 +14,7 @@ import java.io.InputStreamReader;
  *
  * TODO: validate loaded javascript is in bookmarklet form.
  *
- * TODO: cache loaded javascripts to avoid constantly hitting phisical files. (maybe not important since we will be updating like once day and we have data to show, so the user wont be waiting)
+ * TODO: cache loaded javascripts to avoid constantly hitting physical files. (maybe not important since we will be updating like once day and we have data to show, so the user wont be waiting)
  */
 public class JavaScriptLoader {
 
@@ -25,24 +25,26 @@ public class JavaScriptLoader {
     }
 
     public String load(String jsToLoad) throws CantReadJavaScriptException{
-        BufferedReader reader = null;
-
-        StringBuilder js = new StringBuilder();
-
         try{
-            String red;
-            reader = new BufferedReader(
-                    new InputStreamReader(openJsInputStream(jsToLoad)));
-
-            while((red = reader.readLine()) != null){
-                js.append(red);
-            }
-
-            reader.close();
+            return readFromFile(jsToLoad);
         }
         catch(IOException e){
             throw new CantReadJavaScriptException();
         }
+    }
+
+    private String readFromFile(String jsToLoad) throws IOException {
+        String line;
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(openJsInputStream(jsToLoad)));
+
+        StringBuilder js = new StringBuilder();
+
+        while((line = reader.readLine()) != null){
+            js.append(line);
+        }
+
+        reader.close();
 
         return js.toString();
     }
