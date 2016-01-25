@@ -1,0 +1,29 @@
+package com.example.usuario.siga;
+
+import android.net.Uri;
+
+import org.junit.Test;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import static org.junit.Assert.*;
+
+/**
+ * Created by Julian on 24/01/16.
+ */
+public class UriVendorTest {
+    @Test
+    public void getsSigaDomain() throws URISyntaxException {
+        URI uri = new URI("http://www.siga.frba.utn.edu.ar/");
+
+        assertEquals(uri.getHost(), "www.siga.frba.utn.edu.ar");
+    }
+
+    @Test
+    public void getsSiga2Domain() throws URISyntaxException {
+        URI uri = new URI("http://www2.frba.utn.edu.ar/GoTo.php?d=login/index.php");
+
+        assertEquals(uri.getHost(), "www2.frba.utn.edu.ar");
+    }
+}
