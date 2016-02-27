@@ -6,12 +6,11 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 
 /**
- * Created by usuario on 24/01/16.
+ * Created by Julian on 24/01/16.
  */
 public class JavaScriptSiga {
 
-    JavaScriptSiga() {
-    }
+    JavaScriptSiga() {}
 
     @JavascriptInterface
     public String getCip(){
