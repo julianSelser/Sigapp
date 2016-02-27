@@ -26,4 +26,11 @@ public class UriVendorTest {
 
         assertEquals(uri.getHost(), "www2.frba.utn.edu.ar");
     }
+
+    @Test
+    public void getsTestingHTML() throws URISyntaxException {
+        URI uri = new URI("file://javascriptPlayground.html");
+
+        assertEquals(uri.getHost(), "javascriptPlayground.html");
+    }
 }

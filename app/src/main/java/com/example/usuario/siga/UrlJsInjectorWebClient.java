@@ -1,14 +1,11 @@
 package com.example.usuario.siga;
 
-import android.content.Context;
-import android.net.Uri;
 import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,40 +16,40 @@ import java.util.Map;
  */
 public class UrlJsInjectorWebClient extends WebViewClient{
 
-    private JavaScriptLoader jsLoader;
+    private FileLoader files;
     private Map<String, String> jsForUrls;
 
-    public UrlJsInjectorWebClient(JavaScriptLoader _jsLoader){
-        jsLoader = _jsLoader;
+    public UrlJsInjectorWebClient(FileLoader _fileLoader){
+        files = _fileLoader;
 
         jsForUrls = new HashMap();
         jsForUrls.put("www.siga.frba.utn.edu.ar", "dataExtractor.js");
         jsForUrls.put("www2.frba.utn.edu.ar", "login.js");
+        jsForUrls.put("javascriptPlayground.html", "testing.js");
     }
 
     @Override
     public void onPageFinished(WebView view, String url) {
         try {
             injectUrlDependantJs(view, url);
-        } catch (CantReadJavaScriptException e) {
+        } catch (CantReadFile e) {
             //TODO: decide what to do when javascript cant be read. crash the app?
         }
         catch (URISyntaxException e){
-            //TODO: decide what happens when the uri parser breaks? isnt that like the floor dissapearing under your feet?
+            //TODO: decide what happens when the uri parser breaks? isnt it like the floor dissapearing under your feet?
         }
     }
 
-    private void injectUrlDependantJs(WebView view, String url) throws CantReadJavaScriptException, URISyntaxException {
+    private void injectUrlDependantJs(WebView view, String url) throws CantReadFile, URISyntaxException {
         String hostUrl = new URI(url).getHost();
         String jsForUrl = jsForUrls.get(hostUrl);
 
-        //TODO: we need the responsability to register scripts to urls in another class to fix the smell below
         injectJsInto(view, (null != jsForUrl)? jsForUrl: "unknown.js");
     }
 
-    protected void injectJsInto(WebView view, String jsFile) throws CantReadJavaScriptException {
-        Log.d("UrlJsInjectorWebClient", "About to inject: " + jsFile);
+    protected void injectJsInto(WebView view, String jsFileName) throws CantReadFile {
+        Log.d("UrlJsInjectorWebClient", "About to inject: " + jsFileName);
 
-        view.loadUrl(jsLoader.load(jsFile));
+        view.loadUrl("javascript:(function(){" + files.load(jsFileName) + "}())");
     }
 }

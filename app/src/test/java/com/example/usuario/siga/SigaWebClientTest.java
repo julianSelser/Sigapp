@@ -52,8 +52,8 @@ public class SigaWebClientTest {
         }
 
         @Override
-        protected void injectJsInto(WebView view, String jsToLoad){
-            jsLoaded.add(jsToLoad);
+        protected void injectJsInto(WebView view, String jsFileName){
+            jsLoaded.add(jsFileName);
         }
     }
 }

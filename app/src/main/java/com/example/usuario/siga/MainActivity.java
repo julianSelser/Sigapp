@@ -5,11 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import java.io.IOException;
+
 //TODO:use a dependency injector
 //TODO:handle deprecated methods
 public class MainActivity extends AppCompatActivity {
 
     private WebView webView;
+    private FileLoader files = new FileLoader(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +21,13 @@ public class MainActivity extends AppCompatActivity {
 
         configureWebView();
 
-        webView.loadUrl("http://www.siga.frba.utn.edu.ar/");
+        //webView.loadUrl("http://www.siga.frba.utn.edu.ar/");
+
+        try {
+            webView.loadData(files.load("javascriptPlayground.html"), "text/html", null);
+        } catch (CantReadFile cantReadFile) {
+            cantReadFile.printStackTrace();
+        }
     }
 
     private void configureWebView(){
@@ -30,6 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
         webView.addJavascriptInterface(new JavaScriptSiga(), "SIGA");
 
-        webView.setWebViewClient(new UrlJsInjectorWebClient(new JavaScriptLoader(this)));
+        webView.setWebViewClient(new UrlJsInjectorWebClient(files));
     }
 }
