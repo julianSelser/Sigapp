@@ -12,8 +12,6 @@ import java.io.InputStreamReader;
  *
  * Loads javascript from assets.
  *
- * TODO: validate loaded javascript is in bookmarklet form.
- *
  * TODO: cache loaded javascripts to avoid constantly hitting physical files. (maybe not important since we will be updating like once day and we have data to show, so the user wont be waiting)
  */
 public class JavaScriptLoader {
@@ -26,11 +24,15 @@ public class JavaScriptLoader {
 
     public String load(String jsToLoad) throws CantReadJavaScriptException{
         try{
-            return readFromFile(jsToLoad);
+            return urlInjectableJs(jsToLoad);
         }
         catch(IOException e){
             throw new CantReadJavaScriptException();
         }
+    }
+
+    private String urlInjectableJs(String jsToLoad) throws IOException{
+        return "javascript:(function(){" + readFromFile(jsToLoad) + "}())";
     }
 
     private String readFromFile(String jsToLoad) throws IOException {

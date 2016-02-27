@@ -22,7 +22,7 @@ public class JavaScriptLoaderTest {
             }
         };
 
-        assertEquals(jsLoader.load("someJavaScript.js"), "Some js code");
+        assertEquals(jsLoader.load("someJavaScript.js"), "javascript:(function(){Some js code}())");
     }
 
     @Test(expected=CantReadJavaScriptException.class)
