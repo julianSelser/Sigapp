@@ -44,8 +44,10 @@ public class UrlJsInjectorWebClient extends WebViewClient{
 
     private void injectUrlDependantJs(WebView view, String url) throws CantReadJavaScriptException, URISyntaxException {
         String hostUrl = new URI(url).getHost();
+        String jsForUrl = jsForUrls.get(hostUrl);
 
-        injectJsInto(view, jsForUrls.get(hostUrl));
+        //TODO: we need the responsability to register scripts to urls in another class to fix the smell below
+        injectJsInto(view, (null != jsForUrl)? jsForUrl: "unknown.js");
     }
 
     protected void injectJsInto(WebView view, String jsFile) throws CantReadJavaScriptException {

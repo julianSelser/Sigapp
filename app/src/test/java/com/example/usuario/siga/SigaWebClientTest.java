@@ -26,6 +26,13 @@ public class SigaWebClientTest {
     }
 
     @Test
+    public void loadsUnknownScriptForUnknownPages() throws Exception {
+        sigaWebClient.onPageFinished(fakeView, "http://someRandomPageThatDoesntNeedScripts.com");
+
+        assertArrayEquals(new String[]{"unknown.js"}, sigaWebClient.getloadedJs());
+    }
+
+    @Test
     public void onPageFinishedLoadsCorrectScripts() throws Exception {
         String[] expectedLoadedjs = new String[]{"login.js", "dataExtractor.js"};
 

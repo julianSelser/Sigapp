@@ -18,9 +18,7 @@ public class JavaScriptSiga {
     }
 
     @JavascriptInterface
-    public String getPasswd(){
-        return "pass";
-    }
+    public String getPasswd(){ return "pass"; }
 
     @JavascriptInterface
     public void debugMsg(String msg){
