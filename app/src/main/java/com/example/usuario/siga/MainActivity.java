@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import java.io.IOException;
-
 //TODO:use a dependency injector
 //TODO:handle deprecated methods
 public class MainActivity extends AppCompatActivity {
@@ -25,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             webView.loadData(files.load("javascriptPlayground.html"), "text/html", null);
-        } catch (CantReadFile cantReadFile) {
+        } catch (CantLoadFileException cantReadFile) {
             cantReadFile.printStackTrace();
         }
     }

@@ -25,8 +25,8 @@ public class FileLoaderTest {
         assertEquals(loader.load("someFile.file"), "Some file contents");
     }
 
-    @Test(expected=CantReadFile.class)
-    public void throwsCantReadOnBrokenIO() throws CantReadFile {
+    @Test(expected=CantLoadFileException.class)
+    public void throwsCantReadOnBrokenIO() throws CantLoadFileException {
         FileLoader loader = new FileLoader(new MockContext()){
             @Override
             protected InputStream fileInputStream(String file) throws IOException{

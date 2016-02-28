@@ -32,7 +32,7 @@ public class UrlJsInjectorWebClient extends WebViewClient{
     public void onPageFinished(WebView view, String url) {
         try {
             injectUrlDependantJs(view, url);
-        } catch (CantReadFile e) {
+        } catch (CantLoadFileException e) {
             //TODO: decide what to do when javascript cant be read. crash the app?
         }
         catch (URISyntaxException e){
@@ -40,16 +40,18 @@ public class UrlJsInjectorWebClient extends WebViewClient{
         }
     }
 
-    private void injectUrlDependantJs(WebView view, String url) throws CantReadFile, URISyntaxException {
+    private void injectUrlDependantJs(WebView view, String url) throws CantLoadFileException, URISyntaxException {
         String hostUrl = new URI(url).getHost();
         String jsForUrl = jsForUrls.get(hostUrl);
 
         injectJsInto(view, (null != jsForUrl)? jsForUrl: "unknown.js");
     }
 
-    protected void injectJsInto(WebView view, String jsFileName) throws CantReadFile {
+    protected void injectJsInto(WebView view, String jsFileName) throws CantLoadFileException {
         Log.d("UrlJsInjectorWebClient", "About to inject: " + jsFileName);
 
-        view.loadUrl("javascript:(function(){" + files.load(jsFileName) + "}())");
+        view.loadUrl("javascript:(function(){" +
+                files.load("onDocumentReady.js") +
+                files.load(jsFileName) + "}())");
     }
 }
