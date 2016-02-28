@@ -15,14 +15,14 @@ import static org.junit.Assert.*;
  */
 public class SigaWebClientTest {
 
-    private UrlJsInjectorWebClientForTesting sigaWebClient;
+    private ScriptInjectorWebClientForTesting sigaWebClient;
     private WebView fakeView;
 
     @Before
     public void setUp() throws Exception {
         fakeView = new WebView(new MockContext());
 
-        sigaWebClient = new UrlJsInjectorWebClientForTesting();
+        sigaWebClient = new ScriptInjectorWebClientForTesting();
     }
 
     @Test
@@ -42,10 +42,8 @@ public class SigaWebClientTest {
         assertArrayEquals(expectedLoadedjs, sigaWebClient.getloadedJs());
     }
 
-    class UrlJsInjectorWebClientForTesting extends UrlJsInjectorWebClient {
+    class ScriptInjectorWebClientForTesting extends ScriptInjectorWebClient {
         private ArrayList<String> jsLoaded = new ArrayList<>();
-
-        public UrlJsInjectorWebClientForTesting() { super(null); }
 
         public String[] getloadedJs(){
             return jsLoaded.toArray(new String[jsLoaded.size()]);

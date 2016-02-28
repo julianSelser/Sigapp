@@ -4,6 +4,12 @@ import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.example.usuario.siga.fileloader.CantLoadFileException;
+import com.example.usuario.siga.fileloader.ContextFileLoader;
+import com.example.usuario.siga.fileloader.FileLoader;
+import com.example.usuario.siga.fileloader.FileLoaderFacade;
+import com.example.usuario.siga.fileloader.UninitializedFileLoaderException;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -14,13 +20,13 @@ import java.util.Map;
  *
  * Injects JavaScript depending on the URL onPageFinished
  */
-public class UrlJsInjectorWebClient extends WebViewClient{
+public class ScriptInjectorWebClient extends WebViewClient{
 
     private FileLoader files;
     private Map<String, String> jsForUrls;
 
-    public UrlJsInjectorWebClient(FileLoader _fileLoader){
-        files = _fileLoader;
+    public ScriptInjectorWebClient() {
+        files = FileLoaderFacade.getFileLoader();
 
         jsForUrls = new HashMap();
         jsForUrls.put("www.siga.frba.utn.edu.ar", "dataExtractor.js");
@@ -33,7 +39,7 @@ public class UrlJsInjectorWebClient extends WebViewClient{
         try {
             injectUrlDependantJs(view, url);
         } catch (CantLoadFileException e) {
-            //TODO: decide what to do when javascript cant be read. crash the app?
+            //TODO: decide what to do when javascript cant be read. crash the app? send me an email? magikarp?
         }
         catch (URISyntaxException e){
             //TODO: decide what happens when the uri parser breaks? isnt it like the floor dissapearing under your feet?
@@ -48,10 +54,14 @@ public class UrlJsInjectorWebClient extends WebViewClient{
     }
 
     protected void injectJsInto(WebView view, String jsFileName) throws CantLoadFileException {
-        Log.d("UrlJsInjectorWebClient", "About to inject: " + jsFileName);
+        Log.d("ScriptInjectorWebClient", "About to inject: " + jsFileName);
 
-        view.loadUrl("javascript:(function(){" +
-                files.load("onDocumentReady.js") +
-                files.load(jsFileName) + "}())");
+        try {
+            view.loadUrl("javascript:(function(){" +
+                    files.load("onDocumentReady.js") +
+                    files.load(jsFileName) + "}())");
+        } catch (UninitializedFileLoaderException e) {
+            e.printStackTrace();
+        }
     }
 }

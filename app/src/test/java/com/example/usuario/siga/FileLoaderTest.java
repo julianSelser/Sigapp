@@ -2,6 +2,12 @@ package com.example.usuario.siga;
 
 import android.test.mock.MockContext;
 
+import com.example.usuario.siga.fileloader.CantLoadFileException;
+import com.example.usuario.siga.fileloader.ContextFileLoader;
+import com.example.usuario.siga.fileloader.FileLoader;
+import com.example.usuario.siga.fileloader.FileLoaderFacade;
+import com.example.usuario.siga.fileloader.UninitializedFileLoaderException;
+
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -13,7 +19,7 @@ import static org.junit.Assert.*;
 public class FileLoaderTest {
     @Test
     public void loadJavaScript() throws Exception {
-        FileLoader loader = new FileLoader(new MockContext()){
+        ContextFileLoader loader = new ContextFileLoader(new MockContext()){
             @Override
             protected InputStream fileInputStream(String file) throws IOException{
                 String contents = "Some file contents";
@@ -27,7 +33,7 @@ public class FileLoaderTest {
 
     @Test(expected=CantLoadFileException.class)
     public void throwsCantReadOnBrokenIO() throws CantLoadFileException {
-        FileLoader loader = new FileLoader(new MockContext()){
+        ContextFileLoader loader = new ContextFileLoader(new MockContext()){
             @Override
             protected InputStream fileInputStream(String file) throws IOException{
                 throw new IOException();
@@ -35,5 +41,12 @@ public class FileLoaderTest {
         };
 
         loader.load("someBrokenFile.file");
+    }
+
+    @Test(expected= UninitializedFileLoaderException.class)
+    public void throwsWhenFacadeLoaderUninitialized() throws CantLoadFileException, UninitializedFileLoaderException {
+        FileLoader fileLoader = FileLoaderFacade.getFileLoader();
+
+        fileLoader.load("something.file");
     }
 }

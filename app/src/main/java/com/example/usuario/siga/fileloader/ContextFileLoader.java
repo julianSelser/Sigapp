@@ -1,4 +1,4 @@
-package com.example.usuario.siga;
+package com.example.usuario.siga.fileloader;
 
 import android.content.Context;
 
@@ -14,11 +14,11 @@ import java.io.InputStreamReader;
  *
  * TODO: cache loaded javascripts to avoid constantly hitting physical files. (maybe not important since we will be updating like once day and we have data to show, so the user wont be waiting)
  */
-public class FileLoader {
+public class ContextFileLoader extends FileLoader{
 
     Context context;
 
-    public FileLoader(Context c){
+    public ContextFileLoader(Context c){
         context = c;
     }
 
@@ -51,5 +51,3 @@ public class FileLoader {
         return context.getAssets().open(file);
     }
 }
-
-class CantLoadFileException extends Exception {}

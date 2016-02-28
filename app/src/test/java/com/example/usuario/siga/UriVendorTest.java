@@ -10,6 +10,8 @@ import java.net.URISyntaxException;
 import static org.junit.Assert.*;
 
 /**
+ * Vendor tests to check URI behaviour
+ *
  * Created by Julian on 24/01/16.
  */
 public class UriVendorTest {

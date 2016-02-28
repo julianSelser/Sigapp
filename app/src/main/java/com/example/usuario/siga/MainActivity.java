@@ -5,12 +5,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.example.usuario.siga.fileloader.CantLoadFileException;
+import com.example.usuario.siga.fileloader.ContextFileLoader;
+import com.example.usuario.siga.fileloader.FileLoader;
+import com.example.usuario.siga.fileloader.FileLoaderFacade;
+import com.example.usuario.siga.fileloader.UninitializedFileLoaderException;
+
 //TODO:use a dependency injector
 //TODO:handle deprecated methods
 public class MainActivity extends AppCompatActivity {
 
     private WebView webView;
-    private FileLoader files = new FileLoader(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,14 +26,20 @@ public class MainActivity extends AppCompatActivity {
 
         //webView.loadUrl("http://www.siga.frba.utn.edu.ar/");
 
+
+        FileLoader files = FileLoaderFacade.setFileLoader(new ContextFileLoader(this));
+
         try {
-            webView.loadData(files.load("javascriptPlayground.html"), "text/html", null);
+            webView.loadData(files.load("androidJavascriptPlayground.html"), "text/html", null);
         } catch (CantLoadFileException cantReadFile) {
             cantReadFile.printStackTrace();
+        } catch (UninitializedFileLoaderException e) {
+            e.printStackTrace();
         }
     }
 
-    private void configureWebView(){
+    //TODO: find a way to put this code in a webview subclass, its killing me
+    private void configureWebView() {
         webView = (WebView) findViewById(R.id.activity_main_webview);
 
         WebSettings webSettings = webView.getSettings();
@@ -37,6 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
         webView.addJavascriptInterface(new JavaScriptSiga(), "SIGA");
 
-        webView.setWebViewClient(new UrlJsInjectorWebClient(files));
+        webView.setWebViewClient(new ScriptInjectorWebClient());
     }
 }
