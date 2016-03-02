@@ -14,6 +14,8 @@ public class FileLoaderFacade{
         }
     };
 
+    private FileLoaderFacade() {}
+
     public static String load(String fileName) throws CantLoadFileException, UninitializedFileLoaderException {
         return fileLoader.load(fileName);
     }

@@ -35,4 +35,11 @@ public class UriVendorTest {
 
         assertEquals(uri.getHost(), "javascriptPlayground.html");
     }
+
+    @Test
+    public void getsOtherTestingHTML() throws URISyntaxException {
+        URI uri = new URI("http://www.androidJavascriptPlayground.com");
+
+        assertEquals(uri.getHost(), "www.androidJavascriptPlayground.com");
+    }
 }

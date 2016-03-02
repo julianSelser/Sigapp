@@ -42,6 +42,15 @@ public class SigaWebClientTest {
         assertArrayEquals(expectedLoadedjs, sigaWebClient.getloadedJs());
     }
 
+    @Test
+    public void whenLoadingTestingHTMLConcatAllScripts() {
+        String[] expectedLoadedjs = new String[]{"testing.js"};
+
+        sigaWebClient.onPageFinished(fakeView, "file://androidJavascriptPlayground.html");
+
+        assertArrayEquals(expectedLoadedjs, sigaWebClient.getloadedJs());
+    }
+
     class ScriptInjectorWebClientForTesting extends ScriptInjectorWebClient {
         private ArrayList<String> jsLoaded = new ArrayList<>();
 
