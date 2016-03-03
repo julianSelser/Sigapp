@@ -1,4 +1,20 @@
 <resources>
     <string name="app_name">SIGA</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">settings</string>
+
+    <!-- Strings for the main menu -->
+    <string name="plan_completion">seguidor de carrera</string>
+    <string name="alternativity">organizador de alternativas</string>
+    <string name="track_paperwork">tramites y alarmas</string>
+    <string name="open_siga">abrir el SIGA en el navegador</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings for the login -->
+    <string name="prompt_cip">legajo</string>
+    <string name="prompt_password">contraseña</string>
+    <string name="action_sign_in">log in</string>
+    <string name="action_sign_in_short">log in</string>
+    <string name="error_invalid_cip">legajo invalido</string>
+    <string name="error_invalid_password">contraseña invalida</string>
+    <string name="error_field_required">campo obligatorio</string>
 </resources>

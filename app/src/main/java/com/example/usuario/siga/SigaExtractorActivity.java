@@ -14,7 +14,7 @@ import com.example.usuario.siga.fileloader.UninitializedFileLoaderException;
 
 //TODO:use a dependency injector
 //TODO:handle deprecated methods
-public class MainActivity extends AppCompatActivity {
+public class SigaExtractorActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +25,14 @@ public class MainActivity extends AppCompatActivity {
         WebView webView = configureWebView((WebView) findViewById(R.id.activity_main_webview));
 
 //        webView.loadUrl("http://www.siga.frba.utn.edu.ar/");
-
-        try {
-            webView.loadDataWithBaseURL("file://androidJavascriptPlayground.html", files.load("androidJavascriptPlayground.html"), "text/html", null, null);
-        } catch (CantLoadFileException cantReadFile) {
-            cantReadFile.printStackTrace();
-        } catch (UninitializedFileLoaderException e) {
-            e.printStackTrace();
-        }
+        webView.loadUrl("file:///android_asset/javascriptPlayground.html");
+//        try {
+//            webView.loadDataWithBaseURL("file://androidJavascriptPlayground.html", files.load("androidJavascriptPlayground.html"), "text/html", null, null);
+//        } catch (CantLoadFileException cantReadFile) {
+//            cantReadFile.printStackTrace();
+//        } catch (UninitializedFileLoaderException e) {
+//            e.printStackTrace();
+//        }
     }
 
     //TODO: find a way to put this code in a webview subclass, its killing me
