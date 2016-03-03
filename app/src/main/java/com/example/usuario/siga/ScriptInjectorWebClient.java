@@ -5,7 +5,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.example.usuario.siga.fileloader.CantLoadFileException;
-import com.example.usuario.siga.fileloader.ContextFileLoader;
 import com.example.usuario.siga.fileloader.FileLoader;
 import com.example.usuario.siga.fileloader.FileLoaderFacade;
 import com.example.usuario.siga.fileloader.UninitializedFileLoaderException;
@@ -31,7 +30,6 @@ public class ScriptInjectorWebClient extends WebViewClient{
         jsForUrls = new HashMap();
         jsForUrls.put("www.siga.frba.utn.edu.ar", "dataExtractor.js");
         jsForUrls.put("www2.frba.utn.edu.ar", "login.js");
-        jsForUrls.put("androidJavascriptPlayground.html", "testing.js");
     }
 
     @Override
@@ -40,38 +38,23 @@ public class ScriptInjectorWebClient extends WebViewClient{
             String hostUrl = new URI(url).getHost();
             String jsFileName = jsForUrls.get(hostUrl);
 
-            injectJsInto(view, (null != jsFileName)? jsFileName: "unknown.js");
+            injectJs(view, jsFileName);
         } catch (URISyntaxException e){
             //TODO: decide what happens when the uri parser breaks? isnt it like the floor dissapearing under your feet?
-        }
-    }
-
-    protected void injectJsInto(WebView view, String jsFileName) {
-        Log.d("ScriptInjectorWebClient", "About to inject: " + jsFileName);
-
-        view.loadUrl(injectableJs(jsFileName));
-    }
-
-    private String injectableJs(String jsFileName) {
-        try {
-            String actualJsToInject = files.load(jsFileName);
-
-            if(jsFileName == "testing.js"){
-                for(String script: jsForUrls.values()){
-                    actualJsToInject += files.load(script) + ";";
-                }
-            }
-
-            return "javascript:(function(){" +
-                    files.load("onDocumentReady.js") +
-                    actualJsToInject + "}())";
-
         } catch (UninitializedFileLoaderException e) {
             e.printStackTrace();
         } catch (CantLoadFileException e) {
             e.printStackTrace();
         }
+    }
 
-        throw new RuntimeException("Cant build javascript to inject");
+    protected void injectJs(WebView view, String jsFileName) throws CantLoadFileException, UninitializedFileLoaderException {
+        Log.d("ScriptInjectorWebClient", "About to inject: " + jsFileName);
+
+        view.loadUrl(
+                "javascript:(function(){" +
+                    files.load("onDocumentReady.js") +
+                    files.load(jsFileName) +
+                "}())");
     }
 }

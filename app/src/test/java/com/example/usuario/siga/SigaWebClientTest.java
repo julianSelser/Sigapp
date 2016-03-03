@@ -26,27 +26,11 @@ public class SigaWebClientTest {
     }
 
     @Test
-    public void loadsUnknownScriptForUnknownPages() throws Exception {
-        sigaWebClient.onPageFinished(fakeView, "http://someRandomPageThatDoesntNeedScripts.com");
-
-        assertArrayEquals(new String[]{"unknown.js"}, sigaWebClient.getloadedJs());
-    }
-
-    @Test
     public void onPageFinishedLoadsCorrectScripts() throws Exception {
         String[] expectedLoadedjs = new String[]{"login.js", "dataExtractor.js"};
 
         sigaWebClient.onPageFinished(fakeView, "http://www2.frba.utn.edu.ar/GoTo.php?d=login/index.php");
         sigaWebClient.onPageFinished(fakeView, "https://www.siga.frba.utn.edu.ar");
-
-        assertArrayEquals(expectedLoadedjs, sigaWebClient.getloadedJs());
-    }
-
-    @Test
-    public void whenLoadingTestingHTMLConcatAllScripts() {
-        String[] expectedLoadedjs = new String[]{"testing.js"};
-
-        sigaWebClient.onPageFinished(fakeView, "file://androidJavascriptPlayground.html");
 
         assertArrayEquals(expectedLoadedjs, sigaWebClient.getloadedJs());
     }
@@ -59,7 +43,7 @@ public class SigaWebClientTest {
         }
 
         @Override
-        protected void injectJsInto(WebView view, String jsFileName){
+        protected void injectJs(WebView view, String jsFileName){
             jsLoaded.add(jsFileName);
         }
     }
