@@ -1,4 +1,4 @@
-package com.example.usuario.siga.serviceprovider.webviewcrawler;
+package com.example.usuario.siga.serviceprovider.webcrawler;
 
 import android.util.Log;
 import android.webkit.WebView;

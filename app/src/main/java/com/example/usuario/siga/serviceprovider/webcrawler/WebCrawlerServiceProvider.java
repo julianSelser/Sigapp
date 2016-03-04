@@ -1,4 +1,4 @@
-package com.example.usuario.siga.serviceprovider.webviewcrawler;
+package com.example.usuario.siga.serviceprovider.webcrawler;
 
 import android.util.Log;
 import android.webkit.WebView;
@@ -11,10 +11,10 @@ import com.example.usuario.siga.serviceprovider.ServiceProvider;
  *
  * Created by Julian on 03/03/16.
  */
-public class WebViewCrawlerServiceProvider extends ServiceProvider {
+public class WebCrawlerServiceProvider extends ServiceProvider {
     private WebView crawlerWebView;
 
-    public WebViewCrawlerServiceProvider(WebView _crawlerWebView) {
+    public WebCrawlerServiceProvider(WebView _crawlerWebView) {
         crawlerWebView = _crawlerWebView;
 
         crawlerWebView.setWebViewClient(new ScriptInjectorWebClient());

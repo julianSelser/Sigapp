@@ -2,13 +2,11 @@ package com.example.usuario.siga;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.example.usuario.siga.fileloader.ContextFileLoader;
 import com.example.usuario.siga.fileloader.FileLoaderFacade;
-import com.example.usuario.siga.serviceprovider.webviewcrawler.ScriptInjectorWebClient;
-import com.example.usuario.siga.serviceprovider.webviewcrawler.WebViewCrawlerServiceProvider;
+import com.example.usuario.siga.serviceprovider.webcrawler.WebCrawlerServiceProvider;
 
 public class MainActivity extends AppCompatActivity {
     private WebView crawlerWebView;
@@ -27,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         new WebViewConfigurer(webappWebView, sigaJs).configure();
         new WebViewConfigurer(crawlerWebView, sigaJs).configure();
 
-        sigaJs.setProvider(new WebViewCrawlerServiceProvider(crawlerWebView));
+        sigaJs.setProvider(new WebCrawlerServiceProvider(crawlerWebView));
 
         webappWebView.loadUrl("file:///android_asset/www/html/login.html");
     }

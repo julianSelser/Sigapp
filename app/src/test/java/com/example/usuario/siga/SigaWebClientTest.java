@@ -3,7 +3,7 @@ package com.example.usuario.siga;
 import android.test.mock.MockContext;
 import android.webkit.WebView;
 
-import com.example.usuario.siga.serviceprovider.webviewcrawler.ScriptInjectorWebClient;
+import com.example.usuario.siga.serviceprovider.webcrawler.ScriptInjectorWebClient;
 
 import org.junit.Before;
 import org.junit.Test;
