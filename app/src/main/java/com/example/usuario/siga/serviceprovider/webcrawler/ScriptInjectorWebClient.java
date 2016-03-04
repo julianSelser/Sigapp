@@ -1,5 +1,6 @@
 package com.example.usuario.siga.serviceprovider.webcrawler;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -22,21 +23,28 @@ import java.util.Map;
 public class ScriptInjectorWebClient extends WebViewClient{
 
     private FileLoader files;
-    private Map<String, String> jsForUrls;
+    private Map<String, String> jsForUrls = new HashMap();
 
     public ScriptInjectorWebClient() {
         files = FileLoaderFacade.getFileLoader();
 
-        jsForUrls = new HashMap();
         jsForUrls.put("www.siga.frba.utn.edu.ar", "www/js/crawler/dataExtractor.js");
         jsForUrls.put("www2.frba.utn.edu.ar", "www/js/crawler/login.js");
+    }
+
+    public Map<String, String> addJsUrlMap(String url, String js){
+        jsForUrls.put(url, js);
+
+        return jsForUrls;
     }
 
     @Override
     public void onPageFinished(WebView view, String url) {
         try {
-            String hostUrl = new URI(url).getHost();
-            String jsFileName = jsForUrls.get(hostUrl);
+            URI uri = new URI(url);
+            String key = uri.getScheme().equals("file")? uri.getPath() : uri.getHost();
+
+            String jsFileName = jsForUrls.get(key);
 
             injectJs(view, jsFileName);
         } catch (URISyntaxException e){

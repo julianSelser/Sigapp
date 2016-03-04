@@ -12,12 +12,13 @@ import com.example.usuario.siga.serviceprovider.ServiceProvider;
  * Created by Julian on 03/03/16.
  */
 public class WebCrawlerServiceProvider extends ServiceProvider {
-    private WebView crawlerWebView;
+    protected WebView crawlerWebView;
 
-    public WebCrawlerServiceProvider(WebView _crawlerWebView) {
+    public WebCrawlerServiceProvider(WebView _crawlerWebView,
+                                     ScriptInjectorWebClient injector) {
         crawlerWebView = _crawlerWebView;
 
-        crawlerWebView.setWebViewClient(new ScriptInjectorWebClient());
+        crawlerWebView.setWebViewClient(injector);
     }
 
     @Override

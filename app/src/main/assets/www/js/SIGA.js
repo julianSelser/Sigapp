@@ -8,17 +8,21 @@ var SIGA = window.SIGA || {
     cip:"",
     pass:"",
     
+    
     getCip: function(){ return this.cip; },
     getPasswd: function(){ return this.pass; },
     setCip: function(cip){ return this.cip = cip; },
     setPasswd: function(pass){ return this.pass = pass; },
     
+    logIn: function(){},
+    
     debugMsg: function(m){ console.log(m); },
     
-    loginDataWasWrong: function(){ ; },
+    loginDataWasWrong: function(){},
     
     attemptLogin: function(){},
     
     isLoggedIn: function(){ return true; }
     
 };
+

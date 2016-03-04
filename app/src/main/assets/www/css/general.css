@@ -14,8 +14,17 @@ html, body, #content{
 .input, .btn{
     width: 100%;
     border-width: 0 0 1px 0;
+    border-bottom-color: gainsboro;
     padding: 1em  0 0.75em  0;
     margin: 0.75em  0 0.75em  0;
+}
+
+.invisible{
+    visibility: hidden;
+}
+
+.disabledLook{
+    background-color: gainsboro;
 }
 
 #content{

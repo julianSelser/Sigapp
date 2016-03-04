@@ -7,32 +7,35 @@ onDocumentReady(function(){
 function attemptLogin(){
     var cipInput = document.querySelector('#legajo');
     var passInput = document.querySelector('#pass');
+    var spinner = document.querySelector('#submitSpinner');
     
     cipInput.disabled = true;
     passInput.disabled = true;
+    cipInput.classList.add("disabledLook");
+    passInput.classList.add("disabledLook");
+    spinner.classList.remove("invisible");
     
     SIGA.setCip(cipInput.value);
     SIGA.setPasswd(passInput.value);
     
     SIGA.attemptLogin();
     
-    new Promise(function(resolve, reject){
+    var i = setInterval(function(){
+        SIGA.debugMsg('still waiting for login...');
+
+        if(SIGA.isLoggedIn()){
+            clearInterval(i);
+            window.location.href = 'main.html';
+        }
         
-        var i = setInterval(function(){
-            if(SIGA.isLoggedIn()){
-                clearInterval(i);
-                resolve();
-            }
-            
-            //TODO: check for login status
-            //if theres errors, or timeout, reject()
-        }, 500);
-    }).then(function(){
-        cipInput.disabled = false;
-        passInput.disabled = false;
-        window.location.href = 'main.html';
+        if(false){ 
+            cipInput.disabled = false;
+            passInput.disabled = false;
+            cipInput.classList.remove("disabledLook");
+            passInput.classList.remove("disabledLook");
+            spinner.classList.add("invisible");
+        }
         
-    }).catch(function(){
-        //TODO: handle errors, show them to user
-    });
+    }, 500);
+
 }

@@ -28,16 +28,17 @@ public class UriVendorTest {
     }
 
     @Test
-    public void getsTestingHTML() throws URISyntaxException {
-        URI uri = new URI("file://javascriptPlayground.html");
+    public void fileSchemasDontHaveHosts() throws URISyntaxException {
+        URI uri = new URI("file:///android_asset/www/html/siga.html");
 
-        assertEquals(uri.getHost(), "javascriptPlayground.html");
+        assertNull(uri.getHost()); //understandable but annoying
     }
 
     @Test
-    public void getsOtherTestingHTML() throws URISyntaxException {
-        URI uri = new URI("http://www.androidJavascriptPlayground.com");
+    public void getPathIsUsedForFileSchemas() throws URISyntaxException {
+        URI uri = new URI("file:///android_asset/www/html/siga.html");
 
-        assertEquals(uri.getHost(), "www.androidJavascriptPlayground.com");
+        assertEquals(uri.getPath(), "/android_asset/www/html/siga.html");
     }
+
 }

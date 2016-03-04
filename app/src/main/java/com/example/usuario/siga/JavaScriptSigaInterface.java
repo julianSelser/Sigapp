@@ -25,6 +25,9 @@ public class JavaScriptSigaInterface {
     public void setProvider(ServiceProvider _provider){ provider = _provider;}
 
     @JavascriptInterface
+    public void logIn(){ isLoggedIn = true; }
+
+    @JavascriptInterface
     public boolean isLoggedIn(){ return isLoggedIn; }
 
     @JavascriptInterface
