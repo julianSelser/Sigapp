@@ -16,13 +16,13 @@ function fillLoginAndSubmit(){
     document.querySelector(selectors.submit).click();
 }
 
-function loginDataIsOk(){
+function shouldAttemptLogin(){
     return !(document.querySelector(selectors.errorSection));
 }
 
 onDocumentReady(function(){
-    if(loginDataIsOk()){
-        SIGA.debugMsg('Login data correct, attempting submit');
+    if(shouldAttemptLogin()){
+        SIGA.debugMsg('attempting real login');
 
         fillLoginAndSubmit();
     }

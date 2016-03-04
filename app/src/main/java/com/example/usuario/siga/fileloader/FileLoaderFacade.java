@@ -3,6 +3,7 @@ package com.example.usuario.siga.fileloader;
 /**
  * Facade to allow loading files easier and globally
  * It's not complete dogpoop because we delegate the loading to an instance we can test
+ * (hint: it IS complete dogpoop)
  *
  * Created by Julian on 28/02/16.
  */

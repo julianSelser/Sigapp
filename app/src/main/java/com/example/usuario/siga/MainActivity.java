@@ -2,49 +2,33 @@ package com.example.usuario.siga;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import com.example.usuario.siga.fileloader.CantLoadFileException;
 import com.example.usuario.siga.fileloader.ContextFileLoader;
-import com.example.usuario.siga.fileloader.FileLoader;
 import com.example.usuario.siga.fileloader.FileLoaderFacade;
-import com.example.usuario.siga.fileloader.UninitializedFileLoaderException;
+import com.example.usuario.siga.serviceprovider.webviewcrawler.ScriptInjectorWebClient;
+import com.example.usuario.siga.serviceprovider.webviewcrawler.WebViewCrawlerServiceProvider;
 
-//TODO:use a dependency injector
-//TODO:handle deprecated methods
 public class MainActivity extends AppCompatActivity {
+    private WebView crawlerWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FileLoader files = FileLoaderFacade.setFileLoader(new ContextFileLoader(this));
-        WebView webView = configureWebView((WebView) findViewById(R.id.activity_main_webview));
+        FileLoaderFacade.setFileLoader(new ContextFileLoader(this));
 
-//        webView.loadUrl("http://www.siga.frba.utn.edu.ar/");
+        JavaScriptSigaInterface sigaJs = new JavaScriptSigaInterface();
+        crawlerWebView = (WebView) findViewById(R.id.crawler_webview);
+        WebView webappWebView = (WebView) findViewById(R.id.webapp_webview);
 
-        try {
-            webView.loadDataWithBaseURL("file://androidJavascriptPlayground.html", files.load("androidJavascriptPlayground.html"), "text/html", null, null);
-        } catch (CantLoadFileException cantReadFile) {
-            cantReadFile.printStackTrace();
-        } catch (UninitializedFileLoaderException e) {
-            e.printStackTrace();
-        }
-    }
+        new WebViewConfigurer(webappWebView, sigaJs).configure();
+        new WebViewConfigurer(crawlerWebView, sigaJs).configure();
 
-    //TODO: find a way to put this code in a webview subclass, its killing me
-    private WebView configureWebView(WebView webView) {
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setSavePassword(false);
+        sigaJs.setProvider(new WebViewCrawlerServiceProvider(crawlerWebView));
 
-        webView.addJavascriptInterface(new JavaScriptSiga(), "SIGA");
-
-        webView.setWebViewClient(new ScriptInjectorWebClient());
-
-        return webView;
+        webappWebView.loadUrl("file:///android_asset/www/html/login.html");
     }
 }

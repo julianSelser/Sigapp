@@ -1,7 +1,5 @@
 package com.example.usuario.siga;
 
-import android.net.Uri;
-
 import org.junit.Test;
 
 import java.net.URI;

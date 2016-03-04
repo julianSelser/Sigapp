@@ -3,6 +3,8 @@ package com.example.usuario.siga;
 import android.test.mock.MockContext;
 import android.webkit.WebView;
 
+import com.example.usuario.siga.serviceprovider.webviewcrawler.ScriptInjectorWebClient;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,7 +29,7 @@ public class SigaWebClientTest {
 
     @Test
     public void onPageFinishedLoadsCorrectScripts() throws Exception {
-        String[] expectedLoadedjs = new String[]{"login.js", "dataExtractor.js"};
+        String[] expectedLoadedjs = new String[]{"www/js/crawler/login.js", "www/js/crawler/dataExtractor.js"};
 
         sigaWebClient.onPageFinished(fakeView, "http://www2.frba.utn.edu.ar/GoTo.php?d=login/index.php");
         sigaWebClient.onPageFinished(fakeView, "https://www.siga.frba.utn.edu.ar");

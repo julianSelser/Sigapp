@@ -9,7 +9,13 @@
 
 
     <WebView
-        android:id="@+id/activity_main_webview"
+        android:id="@+id/webapp_webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <WebView
+        android:visibility="invisible"
+        android:id="@+id/crawler_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

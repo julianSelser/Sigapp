@@ -1,4 +1,4 @@
-package com.example.usuario.siga;
+package com.example.usuario.siga.serviceprovider.webviewcrawler;
 
 import android.util.Log;
 import android.webkit.WebView;
@@ -28,8 +28,8 @@ public class ScriptInjectorWebClient extends WebViewClient{
         files = FileLoaderFacade.getFileLoader();
 
         jsForUrls = new HashMap();
-        jsForUrls.put("www.siga.frba.utn.edu.ar", "dataExtractor.js");
-        jsForUrls.put("www2.frba.utn.edu.ar", "login.js");
+        jsForUrls.put("www.siga.frba.utn.edu.ar", "www/js/crawler/dataExtractor.js");
+        jsForUrls.put("www2.frba.utn.edu.ar", "www/js/crawler/login.js");
     }
 
     @Override
@@ -40,7 +40,7 @@ public class ScriptInjectorWebClient extends WebViewClient{
 
             injectJs(view, jsFileName);
         } catch (URISyntaxException e){
-            //TODO: decide what happens when the uri parser breaks? isnt it like the floor dissapearing under your feet?
+            e.printStackTrace();
         } catch (UninitializedFileLoaderException e) {
             e.printStackTrace();
         } catch (CantLoadFileException e) {
@@ -53,7 +53,7 @@ public class ScriptInjectorWebClient extends WebViewClient{
 
         view.loadUrl(
                 "javascript:(function(){" +
-                    files.load("onDocumentReady.js") +
+                    files.load("www/js/onDocumentReady.js") +
                     files.load(jsFileName) +
                 "}())");
     }
