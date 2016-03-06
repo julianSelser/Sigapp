@@ -1,5 +1,4 @@
 onDocumentReady(function(){
-    
     console.log(window.SIGA? '%cSIGA was injected' : '%cSIGA not injected!',
         'color:' + (window.SIGA? 'blue' : 'red'));
 });
@@ -18,24 +17,17 @@ function attemptLogin(){
     SIGA.setCip(cipInput.value);
     SIGA.setPasswd(passInput.value);
     
-    SIGA.attemptLogin();
-    
-    var i = setInterval(function(){
-        SIGA.debugMsg('still waiting for login...');
-
-        if(SIGA.isLoggedIn()){
-            clearInterval(i);
-            window.location.href = 'main.html';
-        }
+    SIGA.attemptLoginAnd(function(){
+        //success
+        window.location.href = 'main.html';
+    }, function(data){
+        document.querySelector("#errors").innerHTML = data.get();
         
-        if(false){ 
-            cipInput.disabled = false;
-            passInput.disabled = false;
-            cipInput.classList.remove("disabledLook");
-            passInput.classList.remove("disabledLook");
-            spinner.classList.add("invisible");
-        }
-        
-    }, 500);
-
+        //failure        
+        cipInput.disabled = false;
+        passInput.disabled = false;
+        cipInput.classList.remove("disabledLook");
+        passInput.classList.remove("disabledLook");
+        spinner.classList.add("invisible");
+    });
 }

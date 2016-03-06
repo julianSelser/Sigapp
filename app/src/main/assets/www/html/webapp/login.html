@@ -17,7 +17,8 @@
             <form id="loginForm" action="javascript:void(0)" onsubmit="attemptLogin()">
                 <input id="legajo" class="input" type="text" placeholder="Legajo" required/>
                 <input id="pass" class="input" type="password" placeholder="Contraseña" required/>
-                <button id="submitBtn" class="input btn" type="submit">
+                <span id="errors"></span>
+                <button id="submitBtn" class="btn" type="submit">
                     <img id="submitSpinner" class="invisible" src="../../img/loading.gif" alt="...">
                     Logearse
                 </button>

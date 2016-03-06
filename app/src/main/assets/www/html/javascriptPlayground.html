@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="http://localhost:35729/livereload.js"></script>
+        <script src="../js/SIGA.js"></script>
+        <script src="../js/onDocumentReady.js"></script>
+        <script src="../js/crawler/login.js"></script>
+        <script src="../js/testing.js"></script>
         <style>
             .passed-test{
                 color: green;
@@ -9,8 +14,8 @@
     </head>
     <body>
         <h1 id="title">onDocumentReady doesn't work D:</h1>
-        <hr>
 
+        <hr>
         <h1>login.js test</h1>
         <h2 class="passed-test" id="login-test-result"></h2>
         <form id="login-filds" action="javascript:void(0)" onsubmit="loginPassed()">
@@ -18,10 +23,11 @@
             Pass: <input name="passwd" type="password" /><br>
             <input name="enviar" type="submit" value="Enviar D:" />
         </form>
-
-        <script src="../js/SIGA.js"></script>
-        <script src="../js/onDocumentReady.js"></script>
-        <script src="../js/crawler/login.js"></script>
-        <script src="../js/testing.js"></script>
+        
+        <hr>
+        <h1>serviceQuerier tests:</h1>
+        <div id="onsuccess" class="passed-test"></div>
+        <div id="onerror"  class="passed-test"></div>
+        <div id="stopQueryCalled"  class="passed-test"></div>
     </body>
 </html>

@@ -30,12 +30,11 @@ public class ScriptInjectorWebClient extends WebViewClient{
 
         jsForUrls.put("www.siga.frba.utn.edu.ar", "www/js/crawler/dataExtractor.js");
         jsForUrls.put("www2.frba.utn.edu.ar", "www/js/crawler/login.js");
+        jsForUrls.put(null, "www/js/unknown.js");
     }
 
-    public Map<String, String> addJsUrlMap(String url, String js){
+    public void addJsUrlMap(String url, String js){
         jsForUrls.put(url, js);
-
-        return jsForUrls;
     }
 
     @Override
