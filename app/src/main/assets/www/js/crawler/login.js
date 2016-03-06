@@ -1,7 +1,6 @@
 SIGA.debugMsg('In login.js ...');
 
 /* in case they decide to change them in the future */
-/* maybe they should be injected through android? */
 var selectors = {
     loginForm:      '#login-filds',
     cip:            '[name=cip]',
@@ -20,6 +19,11 @@ function shouldAttemptLogin(){
     return !(document.querySelector(selectors.errorSection));
 }
 
+function parsedErrors(){
+    /* should probably parse error div */
+    return document.querySelector(selectors.errorSection).innerHTML;
+}
+
 onDocumentReady(function(){
     if(shouldAttemptLogin()){
         SIGA.debugMsg('attempting real login');
@@ -27,6 +31,8 @@ onDocumentReady(function(){
         fillLoginAndSubmit();
     }
     else{
-        SIGA.loginDataWasWrong();
+        SIGA.debugMsg('loggin data was wrong, errors were: ' + parsedErrors());
+        
+        SIGA.loginDataWasWrong(parsedErrors());
     }
 });

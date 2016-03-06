@@ -12,23 +12,31 @@ import com.example.usuario.siga.serviceprovider.ServiceProvider;
  */
 public class JavaScriptSigaInterface {
 
-    private String cip;
-    private String pass;
-    private boolean isLoggedIn;
+    private String cip = "";
+    private String pass = "";
     private ServiceProvider provider;
 
+
     public JavaScriptSigaInterface() {
-        isLoggedIn = false;
-        //TODO: initialize to null provider
+        //TODO: initialize to null provider?
     }
 
     public void setProvider(ServiceProvider _provider){ provider = _provider;}
 
     @JavascriptInterface
-    public void logIn(){ isLoggedIn = true; }
+    public void logIn(){ provider.logIn(this); }
 
     @JavascriptInterface
-    public boolean isLoggedIn(){ return isLoggedIn; }
+    public boolean isLoggedIn(){ return provider.isLoggedIn(); }
+
+    @JavascriptInterface
+    public boolean loginFailed(){ return provider.loginFailed(); }
+
+    @JavascriptInterface
+    public String getLoginData(){ return provider.getLoginData(); }
+
+    @JavascriptInterface
+    public void loginDataWasWrong(String errors){ provider.loginDataWasWrong(errors); }
 
     @JavascriptInterface
     public String getCip(){ return cip; }
@@ -46,10 +54,5 @@ public class JavaScriptSigaInterface {
     public void debugMsg(String msg){ Log.d("JS", msg); }
 
     @JavascriptInterface
-    public void loginDataWasWrong(){ Log.d("JS", "Login data was wrong!"); }
-
-    @JavascriptInterface
-    public void attemptLogin(){
-        provider.attemptLogin(this);
-    }
+    public void attemptLogin(){ provider.attemptLogin(this); }
 }
