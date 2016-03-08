@@ -3,6 +3,8 @@ package com.example.usuario.siga;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.example.usuario.siga.jsservicehub.JavaScriptSigaInterface;
+
 /**
  * Builds WebView
  *

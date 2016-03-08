@@ -3,13 +3,12 @@ package com.example.usuario.siga;
 import android.test.mock.MockContext;
 import android.webkit.WebView;
 
-import com.example.usuario.siga.serviceprovider.webcrawler.ScriptInjectorWebClient;
+import com.example.usuario.siga.service.crawlerservices.ScriptInjectorWebClient;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 

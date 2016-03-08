@@ -9,9 +9,9 @@ var selectors = {
     errorSection:   '.tableErrors',
 };
 
-function fillLoginAndSubmit(){
-    document.querySelector(selectors.cip).value = SIGA.getCip();
-    document.querySelector(selectors.passwd).value = SIGA.getPasswd();
+function fillLoginAndSubmit(login){
+    document.querySelector(selectors.cip).value = login.getCip();
+    document.querySelector(selectors.passwd).value = login.getPasswd();
     document.querySelector(selectors.submit).click();
 }
 
@@ -25,14 +25,16 @@ function parsedErrors(){
 }
 
 onDocumentReady(function(){
+    var loginService = SIGA.getLoginService();
+    
     if(shouldAttemptLogin()){
         SIGA.debugMsg('attempting real login');
 
-        fillLoginAndSubmit();
+        fillLoginAndSubmit(loginService);
     }
     else{
         SIGA.debugMsg('loggin data was wrong, errors were: ' + parsedErrors());
         
-        SIGA.loginDataWasWrong(parsedErrors());
+        loginService.failWithErrors(parsedErrors());
     }
 });

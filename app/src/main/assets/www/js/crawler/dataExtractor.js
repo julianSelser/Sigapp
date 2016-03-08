@@ -9,7 +9,7 @@ onDocumentReady(function(){
 
 function checkIfLoggedIn(){
     if(isActuallyLoggedIn()){
-        SIGA.logIn();
+        SIGA.getLoginService().succeedWithData(null);
         SIGA.debugMsg('just logged in');
     }
 }

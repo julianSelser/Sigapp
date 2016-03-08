@@ -7,11 +7,14 @@ import android.webkit.WebView;
 
 import com.example.usuario.siga.fileloader.ContextFileLoader;
 import com.example.usuario.siga.fileloader.FileLoaderFacade;
-import com.example.usuario.siga.serviceprovider.webcrawler.DummyWebCrawlerServiceProvider;
-import com.example.usuario.siga.serviceprovider.webcrawler.ScriptInjectorWebClient;
+import com.example.usuario.siga.jsservicehub.JavaScriptSigaInterface;
+import com.example.usuario.siga.service.crawlerservices.login.TestingCrawlerLoginService;
+import com.example.usuario.siga.service.crawlerservices.ScriptInjectorWebClient;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    private WebView crawlerWebView;
     private SharedPreferences prefs;
 
     @Override
@@ -20,17 +23,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         prefs = getPreferences(MODE_PRIVATE);
 
-        FileLoaderFacade.setFileLoader(new ContextFileLoader(this));
 
         JavaScriptSigaInterface sigaJs = new JavaScriptSigaInterface();
-        crawlerWebView = (WebView) findViewById(R.id.crawler_webview);
-        WebView webAppWebView = (WebView) findViewById(R.id.webapp_webview);
+        WebView crawlerWebView = new WebViewConfigurer((WebView) findViewById(R.id.crawler_webview), sigaJs).configure();
+        WebView webAppWebView = new WebViewConfigurer((WebView) findViewById(R.id.webapp_webview), sigaJs).configure();
 
-        new WebViewConfigurer(webAppWebView, sigaJs).configure();
-        new WebViewConfigurer(crawlerWebView, sigaJs).configure();
 
-        DummyWebCrawlerServiceProvider provider = new DummyWebCrawlerServiceProvider(crawlerWebView, prefs, new ScriptInjectorWebClient());
-        sigaJs.setProvider(provider);
+        ScriptInjectorWebClient injector = new ScriptInjectorWebClient(new ContextFileLoader(this), urlToJsMappings());
+        crawlerWebView.setWebViewClient(injector);
+
+        TestingCrawlerLoginService provider = new TestingCrawlerLoginService(crawlerWebView, prefs);
+        sigaJs.setCrawler(crawlerWebView);
+        sigaJs.setLoginProvider(provider);
 
 //        provider.shouldFailLoginOnce();
 //        provider.clearPersistentCredentials();
@@ -44,5 +48,22 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean thereIsNoSavedCredentials() {
         return prefs.getString("cip", "").isEmpty() || prefs.getString("pass", "").isEmpty();
+    }
+
+    private Map<String, String> urlToJsMappings(){
+
+        Map<String, String> jsForUrls = new HashMap();
+
+//        jsForUrls.put("www.siga.frba.utn.edu.ar", "www/js/crawler/dataExtractor.js");
+//        jsForUrls.put("www2.frba.utn.edu.ar", "www/js/crawler/login.js");
+//        jsForUrls.put(null, "www/js/unknown.js");
+
+        jsForUrls.put("/android_asset/www/html/crawler/login.html", "www/js/crawler/login.js");
+        jsForUrls.put("/android_asset/www/html/crawler/failedLogin.html", "www/js/crawler/login.js");
+        jsForUrls.put("/android_asset/www/html/crawler/siga.html", "www/js/crawler/dataExtractor.js");
+
+        return jsForUrls;
+
+
     }
 }
