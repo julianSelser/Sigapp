@@ -21,6 +21,14 @@ public class UriVendorTest {
     }
 
     @Test
+    public void differentSectionsIsSameHost() throws URISyntaxException {
+        URI uri1 = new URI("http://www.siga.frba.utn.edu.ar/");
+        URI uri2 = new URI("http://www.siga.frba.utn.edu.ar/somesection");
+
+        assertEquals(uri1.getHost(), uri1.getHost());
+    }
+
+    @Test
     public void getsSiga2Domain() throws URISyntaxException {
         URI uri = new URI("http://www2.frba.utn.edu.ar/GoTo.php?d=login/index.php");
 

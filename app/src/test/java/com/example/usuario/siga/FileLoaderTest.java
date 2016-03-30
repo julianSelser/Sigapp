@@ -1,14 +1,13 @@
 package com.example.usuario.siga;
 
-import android.test.mock.MockContext;
+import android.content.res.AssetManager;
 
 import com.example.usuario.siga.fileloader.CantLoadFileException;
-import com.example.usuario.siga.fileloader.ContextFileLoader;
+import com.example.usuario.siga.fileloader.AssetsManagerFileLoader;
 import com.example.usuario.siga.fileloader.FileLoader;
-import com.example.usuario.siga.fileloader.FileLoaderFacade;
-import com.example.usuario.siga.fileloader.UninitializedFileLoaderException;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -19,7 +18,7 @@ import static org.junit.Assert.*;
 public class FileLoaderTest {
     @Test
     public void loadJavaScript() throws Exception {
-        ContextFileLoader loader = new ContextFileLoader(new MockContext()){
+        AssetsManagerFileLoader loader = new AssetsManagerFileLoader(Mockito.mock(AssetManager.class)){
             @Override
             protected InputStream fileInputStream(String file) throws IOException{
                 String contents = "Some file contents";
@@ -33,7 +32,7 @@ public class FileLoaderTest {
 
     @Test(expected=CantLoadFileException.class)
     public void throwsCantReadOnBrokenIO() throws CantLoadFileException {
-        ContextFileLoader loader = new ContextFileLoader(new MockContext()){
+        AssetsManagerFileLoader loader = new AssetsManagerFileLoader(Mockito.mock(AssetManager.class)){
             @Override
             protected InputStream fileInputStream(String file) throws IOException{
                 throw new IOException();
@@ -41,12 +40,5 @@ public class FileLoaderTest {
         };
 
         loader.load("someBrokenFile.file");
-    }
-
-    @Test(expected= UninitializedFileLoaderException.class)
-    public void throwsWhenFacadeLoaderUninitialized() throws CantLoadFileException, UninitializedFileLoaderException {
-        FileLoader fileLoader = FileLoaderFacade.getFileLoader();
-
-        fileLoader.load("something.file");
     }
 }

@@ -1,6 +1,6 @@
 package com.example.usuario.siga.fileloader;
 
-import android.content.Context;
+import android.content.res.AssetManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,16 +10,16 @@ import java.io.InputStreamReader;
 /**
  * Created by Julian on 24/01/16.
  *
- * Load files from assets.
+ * Load files from assets
  *
- * TODO: cache loaded javascripts to avoid constantly hitting physical files. (maybe not important since we will be updating like once day and we have data to show, so the user wont be waiting)
+ * TODO: cache loaded javascripts to avoid constantly hitting physical files
  */
-public class ContextFileLoader extends FileLoader{
+public class AssetsManagerFileLoader extends FileLoader{
 
-    Context context;
+    AssetManager assets;
 
-    public ContextFileLoader(Context c){
-        context = c;
+    public AssetsManagerFileLoader(AssetManager assets){
+        this.assets = assets;
     }
 
     public String load(String file) throws CantLoadFileException {
@@ -48,6 +48,6 @@ public class ContextFileLoader extends FileLoader{
     }
 
     protected InputStream fileInputStream(String file) throws IOException{
-        return context.getAssets().open(file);
+        return assets.open(file);
     }
 }

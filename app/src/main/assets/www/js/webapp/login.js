@@ -1,10 +1,12 @@
+/* global SigAPI */
+
 onDocumentReady(function(){
-    console.log(window.SIGA? '%cSIGA was injected' : '%cSIGA not injected!',
-        'color:' + (window.SIGA? 'blue' : 'red'));
+    console.log(window.SigAPI? '%cSigAPI was injected' : '%cSigAPI not injected!',
+        'color:' + (window.SigAPI? 'blue' : 'red'));
 });
 
 function attemptLogin(){
-    var login = SIGA.getService('login');
+    var login = SigAPI.getLoginService();
     var cipInput = document.querySelector('#legajo');
     var passInput = document.querySelector('#pass');
     var spinner = document.querySelector('#submitSpinner');
@@ -18,7 +20,7 @@ function attemptLogin(){
     login.setCip(cipInput.value);
     login.setPasswd(passInput.value);
     
-    SIGA.serviceQuery({
+    SigAPI.serviceQuery({
         service: "login",
         
         onSuccess: function(){

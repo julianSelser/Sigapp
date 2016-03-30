@@ -2,7 +2,7 @@
  * testing.js holds code for testing all other javascripts
  */
 function loginPassed(){
-    var login = SIGA.getService('login');
+    var login = SigAPI.getService('login');
     
     if(document.querySelector(selectors.cip).value == login.getCip() &&
         document.querySelector(selectors.passwd).value == login.getPasswd()){
@@ -36,7 +36,7 @@ function testServiceQuerier(){
 //        if(errored) return "serviceQuerier worked for error";
 //    };
 //
-//    var onSomeServiceData = SIGA.serviceQuerier(successCond, errorCond, dataGetter);
+//    var onSomeServiceData = SigAPI.serviceQuerier(successCond, errorCond, dataGetter);
 //
 //    onSomeServiceData(function(data){
 //        succeeded = false;

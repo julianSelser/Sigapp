@@ -1,4 +1,4 @@
-SIGA.debugMsg('In login.js ...');
+SigAPI.debugMsg('In login.js ...');
 
 /* in case they decide to change them in the future */
 var selectors = {
@@ -25,15 +25,15 @@ function parsedErrors(){
 }
 
 onDocumentReady(function(){
-    var loginService = SIGA.getLoginService();
+    var loginService = SigAPI.getLoginService();
     
     if(shouldAttemptLogin()){
-        SIGA.debugMsg('attempting real login');
+        SigAPI.debugMsg('attempting real login');
 
         fillLoginAndSubmit(loginService);
     }
     else{
-        SIGA.debugMsg('loggin data was wrong, errors were: ' + parsedErrors());
+        SigAPI.debugMsg('loggin data was wrong, errors were: ' + parsedErrors());
         
         loginService.failWithErrors(parsedErrors());
     }

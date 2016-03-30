@@ -1,5 +1,7 @@
 package com.example.usuario.siga.service;
 
+import android.webkit.JavascriptInterface;
+
 /**
  * Interface to provide our app with data
  *
@@ -7,11 +9,15 @@ package com.example.usuario.siga.service;
  */
 public interface Service {
 
+    @JavascriptInterface
     boolean success();
 
+    @JavascriptInterface
     boolean failure();
 
+    @JavascriptInterface
     String getData(); //TODO: return JSON
 
+    @JavascriptInterface
     void startQuerying();
 }

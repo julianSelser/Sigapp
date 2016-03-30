@@ -9,8 +9,8 @@ onDocumentReady(function(){
 
 function checkIfLoggedIn(){
     if(isActuallyLoggedIn()){
-        SIGA.getLoginService().succeedWithData(null);
-        SIGA.debugMsg('just logged in');
+        SigAPI.getLoginService().succeedWithData(null);
+        SigAPI.debugMsg('just logged in');
     }
 }
 

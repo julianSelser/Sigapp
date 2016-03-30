@@ -1,9 +1,9 @@
 /**
- * SIGA stub of the JavascriptInterface
- * if SIGA was injected by an activity, it uses that one
- * @type SIGA 
+ * SigAPI stub of the JavascriptInterface
+ * if SigAPI was injected by an activity, it uses that one
+ * @type SigAPI 
  */
-var SIGA = window.SIGA || {
+var SigAPI = window.SigAPI || {
     
     getLoginService: function(){
         return {
@@ -30,7 +30,7 @@ var SIGA = window.SIGA || {
     
 };
 
-SIGA.getService = function(serviceString){
+SigAPI.getService = function(serviceString){
     if(typeof serviceString !== "string")
         throw new Error("service must recieve a string");
     
@@ -38,17 +38,16 @@ SIGA.getService = function(serviceString){
             serviceString.charAt(0).toUpperCase() + serviceString.slice(1).toLowerCase();
     
     var service = "get" + capitalizedServiceString + "Service";
-    
-    SIGA.debugMsg(SIGA[service]? "about to return " + serviceString : "No " + service);
-    return SIGA[service]();
+
+    return SigAPI[service]();
 };
 
 /* Encapsulates async service querying, with callbacks onSuccess and onFailure */
-SIGA.serviceQuery = function(queryOptions){
+SigAPI.serviceQuery = function(queryOptions){
     /* TODO: add validation checks to queryOptions, ie.: to have an onSuccess, etc*/
 
     var i;
-    var service = SIGA.getService(queryOptions.service);
+    var service = SigAPI.getService(queryOptions.service);
     var data = {
         stopQuerying: function(){
             clearInterval(i);

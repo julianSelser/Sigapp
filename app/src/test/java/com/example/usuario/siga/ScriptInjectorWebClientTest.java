@@ -3,12 +3,14 @@ package com.example.usuario.siga;
 import android.test.mock.MockContext;
 import android.webkit.WebView;
 
-import com.example.usuario.siga.service.crawlerservices.ScriptInjectorWebClient;
+import com.example.usuario.siga.service.crawler.ScriptInjectorWebClient;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -23,8 +25,12 @@ public class ScriptInjectorWebClientTest {
     @Before
     public void setUp() throws Exception {
         fakeView = new WebView(new MockContext());
+        Map<String, String> initialMap = new HashMap<>();
 
-        sigaWebClient = new ScriptInjectorWebClientForTesting();
+        initialMap.put("http://www2.frba.utn.edu.ar/GoTo.php?d=login/index.php", "www/js/crawler/login.js");
+        initialMap.put("https://www.siga.frba.utn.edu.ar", "www/js/crawler/dataExtractor.js");
+
+        sigaWebClient = new ScriptInjectorWebClientForTesting(initialMap);
     }
 
     @Test
@@ -41,7 +47,7 @@ public class ScriptInjectorWebClientTest {
     public void canAddMappings() throws Exception {
         String[] expectedLoadedjs = new String[]{"some.js"};
 
-        sigaWebClient.addJsUrlMap("www.someurl.com", "some.js");
+        sigaWebClient.addJsUrlMap("http://www.someurl.com", "some.js");
 
         sigaWebClient.onPageFinished(fakeView, "http://www.someurl.com");
 
@@ -52,7 +58,7 @@ public class ScriptInjectorWebClientTest {
     public void injectsJsForFileUri() throws Exception {
         String[] expectedLoadedjs = new String[]{"some.js"};
 
-        sigaWebClient.addJsUrlMap("/android_asset/www/html/crawler/login.html", "some.js");
+        sigaWebClient.addJsUrlMap("file:///android_asset/www/html/crawler/login.html", "some.js");
 
         sigaWebClient.onPageFinished(fakeView, "file:///android_asset/www/html/crawler/login.html");
 
@@ -62,9 +68,13 @@ public class ScriptInjectorWebClientTest {
     class ScriptInjectorWebClientForTesting extends ScriptInjectorWebClient {
         private ArrayList<String> jsLoaded = new ArrayList<>();
 
+        public ScriptInjectorWebClientForTesting(Map<String, String> mappings) { super(null, mappings); }
+
         public String[] getloadedJs(){
             return jsLoaded.toArray(new String[jsLoaded.size()]);
         }
+
+        public void addJsUrlMap(String url, String script){  jsForUrls.put(url, script); }
 
         @Override
         protected void injectJs(WebView view, String jsFileName){
