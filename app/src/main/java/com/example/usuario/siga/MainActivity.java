@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         LoginService loginService = /* Your reaction when Im assigning this comment as a variable */
 
         new AndroidCrawlerSigAPIFactory(crawlerWebView, prefs, getAssets())
-            .crawlFakeLocalSiga()
+//            .crawlFakeLocalSiga()
             .makeSigAPI()
             .addItselfAsJsInterfaceTo(webAppWebView)
             .getLoginService()
