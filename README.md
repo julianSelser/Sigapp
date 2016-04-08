@@ -6,20 +6,32 @@ App de android que hace de seguidor de carrera y tramites (entre otras cosas) co
 Se encuentra en las primeras etapas del desarrollo. Para usarlo hay que tener instalado el [Android Studio](http://developer.android.com/intl/es/sdk/index.html)
 
 # Estructura del proyecto
+
+Nota: Se excluyen algunos archivos/carpetas para mantenerlo sintético
+
 ```
 Sigapp/app/src
 |
-|-test/java/com/example/usuario/siga : tests unitarios
+|--test/java/com/example/usuario/siga : tests unitarios
 |
 +-main
   |--java/com/example/usuario/siga/
-  |      |-----fileloader/           : utilitario para leer archivos en android
-  |      |-----service/              : servicios del SIGA(por ejemplo, login) y crawler
-  |      |-----sigapi/               : interfaz desde donde se usan los servicios del SIGA. inyectable a javascript
-  |      |-----sigapifactory/        : factories de SigaApi's. Por scrapeo la web en memoria, la idéa despues queriear un servicio
-  |      +-----MainActivity.java     : punto de entrada de la aplicación
+  |   |--fileloader/
+  |   |   |
+  |   |   +--FileLoader.java  : utilitario para leer archivos en android (se acceden por medio de Context)
+  |   |
+  |   |--service/
+  |   |   |
+  |   |   |--Service.java     : interfaz para servicios del SIGA (por ejemplo, login)
+  |   |   +--crawler/         : crawler con el que se scrapea el SIGA, es usado por Servicios que scrapean aunque la idéa despues es usar un API JSON
+  |   |
+  |   |--sigapi/              : interfaz desde donde se usan los servicios del SIGA. inyectable a javascript
+  |   |
+  |   |--sigapifactory/       : factories de SigaApi's. Por scrapeo la web en memoria, la idéa despues queriear un servicio
+  |   |
+  |   +--MainActivity.java    : punto de entrada de la aplicación
   |
-  +--/assets/www/                    : frontend web
+  +--/assets/www/             : frontend web
 ```
 
 #Screenshots
