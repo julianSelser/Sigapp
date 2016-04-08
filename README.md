@@ -27,7 +27,7 @@ Sigapp/app/src
   |   |
   |   |--sigapi/              : interfaz desde donde se usan los servicios del SIGA. inyectable a javascript
   |   |
-  |   |--sigapifactory/       : factories de SigaApi's. Por scrapeo la web en memoria, la idéa despues queriear un servicio
+  |   |--sigapifactory/       : factories de SigaApi's. Por ahora solo existe un SigApi que crawlea la web del SIGA
   |   |
   |   +--MainActivity.java    : punto de entrada de la aplicación
   |
