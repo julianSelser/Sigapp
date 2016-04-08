@@ -20,9 +20,8 @@ public class MainActivity extends AppCompatActivity {
         WebView crawlerWebView = (WebView) findViewById(R.id.crawler_webview);
         WebView webAppWebView = (WebView) findViewById(R.id.webapp_webview);
 
-        LoginService loginService = /* Your reaction when Im assigning this comment as a variable */
-
-        new AndroidCrawlerSigAPIFactory(crawlerWebView, prefs, getAssets())
+        LoginService loginService = 
+            new AndroidCrawlerSigAPIFactory(crawlerWebView, prefs, getAssets())
 //            .crawlFakeLocalSiga()
             .makeSigAPI()
             .addItselfAsJsInterfaceTo(webAppWebView)
