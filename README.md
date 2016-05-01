@@ -5,6 +5,8 @@ App de android que hace de seguidor de carrera y tramites (entre otras cosas) co
 
 Se encuentra en las primeras etapas del desarrollo. Para usarlo hay que tener instalado el [Android Studio](http://developer.android.com/intl/es/sdk/index.html)
 
+Es probable que no lo termine nunca porque van a deprecar al SIGA y no hay una manera conveniente de cuidar los datos de los usuarios sin al mismo tiempo usarles todos los datos de la red. La historia sería distinta si existiera un API de algún tipo dada por la facultad, pero es pedir mucho
+
 # Estructura del proyecto
 
 Nota: Se excluyen algunos archivos/carpetas para mantenerlo sintético
